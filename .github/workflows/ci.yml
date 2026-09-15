@@ -10,8 +10,11 @@ jobs:
     name: Testes Unitários
     runs-on: ubuntu-latest
     steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
       - name: Configurar Linguagem - Python
-        uses: actions/set-up-python@v4
+        uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
