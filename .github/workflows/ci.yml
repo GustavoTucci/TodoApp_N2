@@ -28,6 +28,7 @@ jobs:
 
   testes-integracao:
     name: testes-de-integração
+    needs: testes-unitarios
     runs-on: ubuntu-latest
     steps:
       - name: Baixar código do repositório
@@ -48,6 +49,9 @@ jobs:
 
   testes-e2e:
     name: teste-e2e
+    needs: 
+      - testes-unitarios
+      - testes-integracao
     runs-on: ubuntu-latest
     steps:
       - name: Baixar código do repositório
