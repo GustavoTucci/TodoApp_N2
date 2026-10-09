@@ -6,7 +6,7 @@ on: #gatilho - trigger
       [main]
 
 jobs:
-  testes:
+  testes-unitarios:
     name: testes-unitários
     runs-on: ubuntu-latest
     steps:
@@ -21,13 +21,12 @@ jobs:
       - name: Instalar Dependências
         run: |
           pip install -r requirements.txt
-    
+
       - name: Executar Testes Unitários
         run: |
           pytest tests/unit
 
-jobs:
-  testes:
+  testes-integracao:
     name: testes-de-integração
     runs-on: ubuntu-latest
     steps:
@@ -42,13 +41,12 @@ jobs:
       - name: Instalar Dependências
         run: |
           pip install -r requirements.txt
-    
+
       - name: Executar Testes de Integração
         run: |
           pytest tests/integration
 
-jobs:
-  testes:
+  testes-e2e:
     name: teste-e2e
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +61,7 @@ jobs:
       - name: Instalar Dependências
         run: |
           pip install -r requirements.txt
-    
+
       - name: Executar Testes E2E
         run: |
           pytest tests/e2e
