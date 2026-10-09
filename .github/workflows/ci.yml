@@ -7,7 +7,7 @@ on: #gatilho - trigger
 
 jobs:
   testes:
-    name: Testes Unitários
+    name: testes-unitários
     runs-on: ubuntu-latest
     steps:
       - name: Baixar código do repositório
@@ -25,3 +25,45 @@ jobs:
       - name: Executar Testes Unitários
         run: |
           pytest tests/unit
+
+jobs:
+  testes:
+    name: testes-de-integração
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Linguagem - Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: |
+          pip install -r requirements.txt
+    
+      - name: Executar Testes de Integração
+        run: |
+          pytest tests/integration
+
+jobs:
+  testes:
+    name: teste-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Linguagem - Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: |
+          pip install -r requirements.txt
+    
+      - name: Executar Testes E2E
+        run: |
+          pytest tests/e2e
