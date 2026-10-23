@@ -1,0 +1,71 @@
+name: Pipeline de CI
+
+on: #gatilho - trigger
+  push:
+    branches:
+      [main]
+
+jobs:
+  testes-unitarios:
+    name: testes-unitários
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Linguagem - Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executar Testes Unitários
+        run: |
+          pytest tests/unit
+
+  testes-integracao:
+    name: testes-de-integração
+    needs: testes-unitarios
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Linguagem - Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executar Testes de Integração
+        run: |
+          pytest tests/integration
+
+  testes-e2e:
+    name: teste-e2e
+    needs: 
+      - testes-unitarios
+      - testes-integracao
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Linguagem - Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar Dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Executar Testes E2E
+        run: |
+          pytest tests/e2e
